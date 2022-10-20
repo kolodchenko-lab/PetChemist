@@ -14,7 +14,7 @@ public class BaseSetup {
     public static WebDriver driver;
 
     public BaseSetup() {
-        System.setProperty("webdriver.chrome.driver", "C:/DRIVERS/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "C:/DRIVERS/chromedriver.exe"); // хром драйвер стоит на локальной машине
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("start-maximized");
