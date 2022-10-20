@@ -23,5 +23,7 @@ public class ReqresTestClient {
     private String email;
     @JsonProperty("avatar")
     private String avatar;
+    @JsonProperty("createdAt")
+    private long createdAt;
 
 }

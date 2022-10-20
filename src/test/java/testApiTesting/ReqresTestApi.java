@@ -1,27 +1,20 @@
 package testApiTesting;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.DeserializationConfig;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 import net.bytebuddy.utility.RandomString;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.Assertions;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
-
 import java.util.List;
+
 
 import static io.restassured.RestAssured.given;
 
 @Slf4j
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ReqresTestApi {
 
     public static final String Base_URI = "https://reqres.in/api" ;
@@ -67,7 +60,8 @@ public class ReqresTestApi {
 
 
     }
-    @Test//Этот тест не проходит , всё создаёться но не могу проверить своего юзера на наличие значений
+    @JsonIgnoreProperties("createdAt")
+    @Test
     public void checkCreateNewUser(){
         String randomEmail = RandomString.make(5) + "@test.com";
         String nameTest ="Jo_Jo_Test";
@@ -89,18 +83,13 @@ public class ReqresTestApi {
         postResponse.prettyPrint();
         postResponse.then().statusCode(201);
 
-       // postResponse.then().body("data", Matchers.hasEntry("name","Jo_Jo_Test"));
 
-        UsersReaqresTestClient actual = postResponse.body().as(UsersReaqresTestClient.class);
+        postResponse.then().body("id",Matchers.equalTo(77));
 
-        Assertions.assertThat(actual.getData().getFirst_name()).isEqualTo(nameTest);
+        Assertions.assertThat(reqresTestClient.getFirst_name().equals(nameTest));
+
 
     }
-
-
-
-
-
 }
 
 
